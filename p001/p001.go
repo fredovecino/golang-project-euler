@@ -55,11 +55,21 @@ func fast(limit int) float32 {
 	return sum
 }
 
+var lastDivCache = make(map[int]map[int]int)
+
 func lastDiv(d, n int) int {
+
+	if elem, ok := lastDivCache[d][n]; ok == true {
+		return elem
+	}
+
 	for i := n - 1; i > 0; i-- {
 		if i%d == 0 {
+			lastDivCache[d] = map[int]int{}
+			lastDivCache[d][n] = i
 			return i
 		}
 	}
+
 	return -1
 }
